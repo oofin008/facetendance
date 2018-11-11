@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Facetendance - Sign In Form </title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="page/login/images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="page/login/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="page/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="page/login/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="page/login/vendor/animate/animate.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="page/login/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="page/login/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="page/login/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="page/login/vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="page/login/css/util.css">
+	<link rel="stylesheet" type="text/css" href="page/login/css/main.css">
+
+<!--===============================================================================================-->
+</head>
+<body>
+
+	<!--===============================================================================================-->
+
+
+	<script src="https://www.gstatic.com/firebasejs/5.5.5/firebase.js"></script>
+	<script>
+	  // Initialize Firebase
+	  var config = {
+	    apiKey: "AIzaSyC0WVvkBOs_ZFIY54DKZEHEIcv2p84KQOA",
+	    authDomain: "facedance-91e54.firebaseapp.com",
+	    databaseURL: "https://facedance-91e54.firebaseio.com",
+	    projectId: "facedance-91e54",
+	    storageBucket: "facedance-91e54.appspot.com",
+	    messagingSenderId: "644522229018"
+	  };
+	  firebase.initializeApp(config);
+	</script>
+
+	<!--===============================================================================================-->
+
+	<div class="limiter">
+		<div class="container-login100" style="background-image: url('page/login/images/bg-01.jpg');">
+			<div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
+					<span class="login100-form-title p-b-53">
+						Sign In With
+					</span>
+
+					<!-- Google Sign In button -->
+
+					<div class="container-logingoogle-form-btn m-t-17" style="float: left;">
+						<button onclick="googleSignIn()" type="submit" class="logingoogle-form-btn">
+							<img src="page/login/images/icons/icon-google.png">&nbsp;&nbsp;&nbsp;Google
+						</button>
+					</div>
+
+					<!-- Facebook Sign In button -->
+
+					<div class="container-loginfacebook-form-btn m-t-17" style="float: right;" >
+						<button onclick="facebooklogin()" type="submit" class="loginfacebook-form-btn">
+							<img src="page/login/images/icons/icon-facebook.png">&nbsp;&nbsp;&nbsp;Facebook
+						</button>
+					</div>
+
+
+					<!-- Email field -->
+
+					<div class="p-t-31 p-b-9">
+						<span class="txt1">
+							Email
+						</span>
+					</div>
+					<div class="wrap-input100 validate-input" data-validate = "Username is required" >
+						<input class="input100" type="text" name="email" placeholder="Email" id="email_id">
+						<span class="focus-input100"></span>
+					</div>
+
+					<!-- Password field -->
+
+					<div class="p-t-13 p-b-9">
+						<span class="txt1">
+							Password
+						</span>
+
+						<!-- forgot password -->
+
+						<a href="#" class="txt2 bo1 m-l-5">
+							Forgot?
+						</a>
+					</div>
+					<div class="wrap-input100 validate-input" data-validate = "Password is required">
+						<input class="input100" type="password" name="pass" placeholder="Password" id="password_id">
+						<span class="focus-input100"></span>
+					</div>
+
+					<!-- Sign In button -->
+
+					<div class="container-login100-form-btn m-t-17" >
+						<button onclick="SignIn()" type="submit" class="login100-form-btn">
+							Sign In
+						</button>
+					</div>
+
+					<!--   Sign Up button -->
+
+					<div class="w-full text-center p-t-55">
+						<span class="txt2">
+							Not a member?
+						</span>
+
+						<a href="register.html" class="txt2 bo1">
+							Sign up now
+						</a>
+					</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="dropDownSelect1"></div>
+
+	<!-- JavaScript -->
+
+	<!-- Facebook Sign In () -->
+
+	<script>
+	var fbprovider = new firebase.auth.FacebookAuthProvider();
+	function facebooklogin(){
+	firebase.auth().signInWithPopup(fbprovider).then(function(result) {
+  // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+  var token = result.credential.accessToken;
+  // The signed-in user info.
+  var user = result.user;
+	window.location.replace('dashboard/index.html')
+  // ...
+	}).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  // The email of the user's account used.
+  var email = error.email;
+  // The firebase.auth.AuthCredential type that was used.
+  var credential = error.credential;
+  // ...
+	});
+}
+	</script>
+	<!-- Google Sign In () -->
+
+	<script>
+	var provider = new firebase.auth.GoogleAuthProvider();
+	function googleSignIn(){
+		firebase.auth().signInWithPopup(provider).then(function(result) {
+  // This gives you a Google Access Token. You can use it to access the Google API.
+  var token = result.credential.accessToken;
+  // The signed-in user info.
+  var user = result.user;
+	alert('Google Sign In successfully');
+	window.location.replace('dashboard/index.html'); // Success
+	}).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  // The email of the user's account used.
+  var email = error.email;
+  // The firebase.auth.AuthCredential type that was used.
+  var credential = error.credential;
+  // ...
+	});
+	
+	}
+	</script>
+
+	<!-- Function Login () -->
+
+<script>
+function SignIn(){
+				var email = document.getElementById('email_id').value;
+				var password = document.getElementById('password_id').value;
+				// Sign in with email and pass.
+				// [START authwithemail]
+				firebase.auth().signInWithEmailAndPassword(email, password)
+						.then(function(firebaseUser) {
+								var user = firebase.auth().currentUser;
+								var email_verified = user.emailVerified;
+
+								if(email_verified === true){
+										alert('Logged in ');
+										firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+										window.location.replace('dashboard/index.html'); // Success
+								} else {
+										alert('Your email not yet verified, please try again !!')
+										window.location.replace('login.html'); // Success
+								}
+							 })
+						.catch(function(error) {
+					// Handle Errors here.
+					var errorCode = error.code;
+					var errorMessage = error.message;
+					// [START_EXCLUDE]
+					if (errorCode === 'auth/wrong-password') {
+					alert('Wrong password.');
+					} else {
+							alert(errorMessage);
+					}
+						 firebase.auth().signOut();
+						 return;
+							// [END_EXCLUDE]
+			 });
+
+		}
+</script>
+
+<!--===============================================================================================-->
+	<script src="page/login/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="page/login/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="page/login/vendor/bootstrap/js/popper.js"></script>
+	<script src="page/login/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="page/login/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="page/login/vendor/daterangepicker/moment.min.js"></script>
+	<script src="page/login/vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+	<script src="page/login/vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+	<script src="page/login/js/main.js"></script>
+
+
+</body>
+</html>

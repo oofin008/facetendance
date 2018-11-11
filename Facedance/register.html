@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Facetendance - Registration Form</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="page/login/images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="page/login/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="page/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="page/login/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="page/login/vendor/animate/animate.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="page/login/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="page/login/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="page/login/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="page/login/vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="page/login/css/util.css">
+	<link rel="stylesheet" type="text/css" href="page/login/css/main.css">
+<!--===============================================================================================-->
+</head>
+<body>
+
+	<!--===============================================================================================-->
+
+	<script src="https://www.gstatic.com/firebasejs/5.5.5/firebase.js"></script>
+	<script>
+	  // Initialize Firebase
+	  var config = {
+	    apiKey: "AIzaSyC0WVvkBOs_ZFIY54DKZEHEIcv2p84KQOA",
+	    authDomain: "facedance-91e54.firebaseapp.com",
+	    databaseURL: "https://facedance-91e54.firebaseio.com",
+	    projectId: "facedance-91e54",
+	    storageBucket: "facedance-91e54.appspot.com",
+	    messagingSenderId: "644522229018"
+	  };
+	  firebase.initializeApp(config);
+	</script>
+	<!--===============================================================================================-->
+
+	<div class="limiter">
+		<div class="container-login100" style="background-image: url('page/login/images/bg-01.jpg');">
+			<div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
+					<span class="login100-form-title p-b-53">
+						Registration Form
+					</span>
+
+					<!-- Name field -->
+
+					<div class="p-t-13 p-b-9">
+						<span class="txt1">
+							First name
+						</span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate = "First name is required">
+						<input class="input100" type="text" name="name" placeholder="First name" id="firstname_id">
+						<span class="focus-input100"></span>
+					</div>
+
+					<!-- Surname field -->
+
+					<div class="p-t-13 p-b-9">
+						<span class="txt1">
+							Surname
+						</span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate = "Surname is required">
+						<input class="input100" type="text" name="surname" placeholder="Surname" id="surname_id">
+						<span class="focus-input100"></span>
+					</div>
+
+					<!-- Email field -->
+
+					<div class="p-t-31 p-b-9">
+						<span class="txt1">
+							Email
+						</span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: example@abc.com">
+						<input class="input100" type="text" name="email" placeholder="Email" id="email_id">
+						<span class="focus-input100"></span>
+					</div>
+
+					<!-- Password field -->
+
+					<div class="p-t-13 p-b-9">
+						<span class="txt1">
+							Password
+						</span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate = "Password is required">
+						<input class="input100" type="password" name="password" placeholder="Password" id="password_id">
+						<span class="focus-input100"></span>
+					</div>
+
+					<!-- Re-password field -->
+
+					<div class="p-t-13 p-b-9">
+						<span class="txt1">
+							Re-Password
+						</span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate = "Re-Password is required">
+						<input class="input100" type="password" name="password" placeholder="Re-Password" id="repassword_id">
+						<span class="focus-input100"></span>
+					</div>
+
+					<!-- Sign Up button -->
+
+					<div class="container-login100-form-btn m-t-17">
+						<button onclick="signup()" type="submit" class="login100-form-btn">
+							Sign Up
+						</button>
+					</div>
+
+					<div class="w-full text-center p-t-55">
+						<span class="txt2">
+							Already registered ?
+						</span>
+
+						<a href="login.html" class="txt2 bo1">
+							Click here to Sign In
+						</a>
+					</div>
+
+			</div>
+		</div>
+	</div>
+
+
+	<div id="dropDownSelect1"></div>
+
+	<!-- JavaScript -->
+
+	<!------------------------------------------ Signup Function ------------------------------------------>
+
+	<script>
+		function signup(){
+			var firstname = document.getElementById('firstname_id').value;
+			var surname = document.getElementById('surname_id').value;
+			var email = document.getElementById('email_id').value;
+			var password = document.getElementById('password_id').value;
+			var repassword = document.getElementById('repassword_id').value;
+
+			if(password === repassword){
+					firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+							var user = firebase.auth().currentUser;
+			var uid = user.uid;
+							insertdata(firstname, surname, email, password, uid);
+							user.sendEmailVerification().then(function(){
+									alert('Verification email has been sent, please verify before login.');
+									window.location.replace('login.html');
+							}).catch(function(error) {
+								alert('This email already registered. You can Sign In now.');
+								window.location.replace('register.html');
+										//An error happend.
+							});
+							var errorCode = error.code;
+							var errorMessage = error.message;
+					});
+			} else {
+					alert("Password doesn't match !! Try again !!");
+					window.location.replace('register.html');
+			}
+	}
+
+	function insertdata(firstname, surname, email, password, uid){
+	var firebaseRef = firebase.database().ref("users");
+			firebaseRef.child(uid).child("user_info").set({
+					firstname : firstname,
+					surname : surname,
+					email : email,
+					password : password
+			});
+			console.log("Insert Success");
+	}
+</script>
+
+	<!-- Signup Function -->
+
+
+<!--===============================================================================================-->
+	<script src="page/login/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="page/login/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="page/login/vendor/bootstrap/js/popper.js"></script>
+	<script src="page/login/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="page/login/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="page/login/vendor/daterangepicker/moment.min.js"></script>
+	<script src="page/login/vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+	<script src="page/login/vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+	<script src="page/login/js/main.js"></script>
+
+</body>
+</html>
