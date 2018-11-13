@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>createGroup</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+</head>
+<body>
+
+<script type="text/javascript">
+    $(function() {
+        var params = {
+			//groupID must be in lowwercase
+            "personGroupId": "santitestgroup"
+        };
+      
+        $.ajax({
+            url: "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/persongroups/{personGroupId}?" + $.param(params),
+            beforeSend: function(xhrObj){
+                // Request headers
+                xhrObj.setRequestHeader("Content-Type","application/json");
+                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","a8c95726a4db4c4388cf55ac071a5903");
+            },
+            type: "PUT",
+            // Request body
+            data: '{ "name": "santiTest" }',
+        })
+        .done(function(data) {
+            alert("success");
+        })
+        .fail(function(jqXHR, textStatus, errorThrown) {
+            // Display error message.
+            var errorString = (errorThrown === "") ?
+                "Error. " : errorThrown + " (" + jqXHR.status + "): ";
+            errorString += (jqXHR.responseText === "") ?
+                "" : (jQuery.parseJSON(jqXHR.responseText).message) ?
+                    jQuery.parseJSON(jqXHR.responseText).message :
+                        jQuery.parseJSON(jqXHR.responseText).error.message;
+            alert(errorString);
+        });
+    });
+</script>
+</body>
+</html>
